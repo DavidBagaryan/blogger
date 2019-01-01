@@ -1,0 +1,15 @@
+{% extends 'blog/skeleton.html' %}
+
+{% block title %}last posts{% endblock %}
+
+{% block content %}
+
+  <h3 class="mb-5">Posts</h3>
+
+  {% for name in names %}
+
+    <p>{{ name }}</p>
+
+  {% endfor %}
+
+{% endblock %}
