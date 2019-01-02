@@ -1,16 +1,13 @@
 {% extends 'blog/skeleton.html' %}
 
 {% block title %}
-
-  {{ title }}
-
+  {{ tag.title }} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
+  <h3 class="mb-5">post with <i><b>{{ tag.title|title }}</b></i> tag</h3>
 
-  <h3 class="mb-5">posts</h3>
-
-  {% for post in posts %}
+  {% for post in tag.posts.all %}
     {% include 'blog/includes/post_card_template.html' %}
   {% endfor %}
 
