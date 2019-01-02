@@ -1,0 +1,15 @@
+{% extends 'blog/skeleton.html' %}
+
+{% block title %}
+
+  {{ post.title }} - {{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+
+  <h3 class="mb-5">{{ title }}</h3>
+
+  {{ post.body }}
+
+{% endblock %}

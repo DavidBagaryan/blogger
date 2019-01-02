@@ -1,14 +1,25 @@
 {% extends 'blog/skeleton.html' %}
 
-{% block title %}last posts{% endblock %}
+{% block title %}
+
+  {{ title }}
+
+{% endblock %}
 
 {% block content %}
 
-  <h3 class="mb-5">Posts</h3>
+  <h3 class="mb-5">posts</h3>
 
-  {% for name in names %}
+  {% for post in posts %}
 
-    <p>{{ name }}</p>
+    <div class="card mb-3">
+      <h5 class="card-header">{{ post.date_pub }}</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.body|truncatewords:3 }}</p>
+        <a href="{% url 'post_detail' slug=post.slug %}" class="btn btn-primary">read</a>
+      </div>
+    </div>
 
   {% endfor %}
 
