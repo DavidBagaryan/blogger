@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+
   <h3 class="mb-5">post with <i><b>{{ tag.title|title }}</b></i> tag</h3>
 
   {% for post in tag.posts.all %}

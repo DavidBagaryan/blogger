@@ -5,11 +5,16 @@
 {% endblock %}
 
 {% block content %}
-
   <h3 class="mb-5">tags</h3>
 
   {% for tag in tags %}
-    <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
+
+    {% if forloop.last %}
+      <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
+    {% else %}
+      <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a> |
+    {% endif %}
+
   {% endfor %}
 
 {% endblock %}
