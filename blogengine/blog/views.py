@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render  # , redirect
 from django.views import View
 
 from .models import Post, Tag
-from .utils import ObjectDetailMixin
-from .forms import TagForm
+from .utils import ObjectDetailMixin, ObjectCreateMixin
+from .forms import TagForm, PostForm
 
 
 def posts_list(request):
@@ -26,15 +26,11 @@ class TagPosts(ObjectDetailMixin, View):
     template = 'blog/tag_posts.html'
 
 
-class CreateTag(View):
-    def get(self, request):
-        return render(request, 'blog/create_tag.html', context={'form': TagForm()})
+class ObjectCreateTag(ObjectCreateMixin, View):
+    form_model = TagForm
+    template = 'blog/create_tag.html'
 
-    def post(self, request):
-        bound_form = TagForm(request.POST)
 
-        if bound_form.is_valid():
-            new_tag = bound_form.save()
-            return redirect(new_tag)
-
-        return render(request, 'blog/create_tag.html', context={'form': bound_form})
+class ObjectCreatePost(ObjectCreateMixin, View):
+    form_model = PostForm
+    template = 'blog/create_post.html'
