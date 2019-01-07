@@ -7,7 +7,7 @@ from django.utils.text import slugify
 
 def gen_slug(string) -> str:
     new_slug = slugify(string, allow_unicode=True)
-    suffix = datetime.now().strftime('_%y-%m-%d_%H:%M')
+    suffix = datetime.now().strftime('_%y-%m-%d_%H-%M')
     return f'{new_slug}{suffix}'
 
 
@@ -19,11 +19,21 @@ class Post(models.Model):
 
     tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
 
+    def __str__(self):
+        return f'{self.title}'
+
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'slug': self.slug})
 
-    def __str__(self):
-        return f'{self.title}'
+    def get_update_url(self):
+        return reverse('update_post', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('delete_post', kwargs={'slug': self.slug})
+
+    @staticmethod
+    def get_list_page() -> str:
+        return reverse('posts_list')
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -36,8 +46,18 @@ class Tag(models.Model):
     title = models.CharField(max_length=50, db_index=True)
     slug = models.SlugField(max_length=50, unique=True)
 
+    def __str__(self):
+        return f'{self.title}'
+
     def get_absolute_url(self):
         return reverse('tag_posts', kwargs={'slug': self.slug})
 
-    def __str__(self):
-        return f'{self.title}'
+    def get_update_url(self):
+        return reverse('update_tag', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('delete_tag', kwargs={'slug': self.slug})
+
+    @staticmethod
+    def get_list_page() -> str:
+        return reverse('tags_list')

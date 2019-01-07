@@ -1,0 +1,40 @@
+{% extends 'blog/skeleton.html' %}
+
+{% block title %}
+  {{ action }} {{ obj.title }} {{ obj_name }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+  <h3>{{ action }} <b>{{ obj.title }}</b> {{ obj_name }}</h3>
+  <br/>
+  <form class="" action="{{ form_action }}" method="post">
+
+    <div>{% csrf_token %}</div>
+
+    {% if action == 'delete' %}
+
+      <h5>Are you sure want to delete <b>{{ obj.title }}</b> {{ obj_name }}?</h5>
+      <hr/>
+      <a href="{{ obj.get_absolute_url }}" class="btn btn-danger">cancel</a>
+
+    {% else %}
+      {% for field in form %}
+        <div class="form-group">
+
+          {% if field.errors %}
+          <div class="alert alert-danger">{{ field.errors }}</div>
+          {% endif %}
+
+          {{ field.label }}
+          {{ field }}
+
+        </div>
+      {% endfor %}
+
+    <hr/>
+    {% endif %}
+
+    <button class="btn btn-primary" type="submit">{{ action }} {{ obj_name }}</button>
+  </form>
+
+{% endblock %}
