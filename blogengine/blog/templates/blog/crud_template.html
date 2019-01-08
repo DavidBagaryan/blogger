@@ -15,9 +15,10 @@
 
       <h5>Are you sure want to delete <b>{{ obj.title }}</b> {{ obj_name }}?</h5>
       <hr/>
-      <a href="{{ obj.get_absolute_url }}" class="btn btn-danger">cancel</a>
+      <a href="{{ obj.get_absolute_url }}" class="btn btn-info">cancel</a>
 
     {% else %}
+
       {% for field in form %}
         <div class="form-group">
 
@@ -34,7 +35,7 @@
     <hr/>
     {% endif %}
 
-    <button class="btn btn-primary" type="submit">{{ action }} {{ obj_name }}</button>
+    <button class="btn btn-{% if action == 'delete' %}danger{% else %}primary{% endif %}" type="submit">{{ action }} {{ obj_name }}</button>
   </form>
 
 {% endblock %}

@@ -1,3 +1,27 @@
-{% extends 'base_skeleton.html' %}
+{% extends 'base-skeleton.html' %}
 
 {% block title %}blog{% endblock %}
+
+{% block admin_panel %}
+
+  <div class="dropdown">
+    <button class="btn btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+      create
+    </button>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="{% url 'create_post' %}">post</a>
+      <a class="dropdown-item" href="{% url 'create_tag' %}">tag</a>
+    </div>
+  </div>
+
+  {% if detail %}
+    <a class='btn btn-primary' href="{{ obj.get_update_url }}">update</a>
+    <a class='btn btn-danger' href="{{ obj.get_delete_url }}">delete</a>
+  {% elif action == 'update' %}
+    <a class='btn btn-danger' href="{{ obj.get_delete_url }}">delete</a>
+  {% elif action == 'delete' %}
+    <a class='btn btn-light' href="{{ obj.get_update_url }}">update</a>
+  {% endif %}
+
+{% endblock %}
