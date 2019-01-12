@@ -19,7 +19,7 @@ class TagForm(forms.ModelForm):
 
         if cleaned_slug == 'create':
             raise ValidationError('slug can not be "Create"')
-        if Tag.objects.filter(slug__iexact=cleaned_slug).count():
+        if not self.instance.id and bool(Tag.objects.filter(slug__iexact=cleaned_slug).count()):
             raise ValidationError(f'slug must be unique: slug "{cleaned_slug}" already exist')
 
         return cleaned_slug

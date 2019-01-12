@@ -36,9 +36,7 @@ class Post(models.Model):
         return reverse('posts_list')
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = gen_slug(self.title)
-
+        self.slug = gen_slug(self.title)
         super().save(*args, **kwargs)
 
 

@@ -27,26 +27,26 @@ class BaseCrudMixinProperties:
 class ObjectCreateMixin(BaseCrudMixinProperties):
     action = 'create'
 
-    def get(self, request):
+    @property
+    def get_form_action(self) -> str:
+        return f'{self.action}_{self.model.__name__.lower()}'
+
+    def get(self, request, prev_instance=None):
         return render(request, self.template, context={
-            'form': self.form_model(),
+            'form': self.form_model() if not prev_instance else prev_instance,
             'action': self.action,
             'form_action': reverse(self.get_form_action),
             'obj_name': self.get_model_name_lower
         })
 
-    @property
-    def get_form_action(self) -> str:
-        return f'{self.action}_{self.model.__name__.lower()}'
-
     def post(self, request):
-        bound_form = self.form_model(data=request.POST)
+        bound_form = self.form_model(request.POST)
 
         if bound_form.is_valid():
             valid_form = bound_form.save()
             return redirect(valid_form)
 
-        return self.get(request)
+        return self.get(request, bound_form)
 
 
 class ObjectUpdateMixin(BaseCrudMixinProperties):
@@ -58,7 +58,6 @@ class ObjectUpdateMixin(BaseCrudMixinProperties):
             'action': self.action,
             'form_action': obj.get_update_url(),
             'obj_name': self.get_model_name_lower,
-            self.model.__name__.lower(): obj,
         })
 
     def get(self, request, slug):
