@@ -10,7 +10,7 @@
 
   <h3 class="mb-5">posts</h3>
 
-  {% for post in posts %}
+  {% for post in page_obj.object_list %}
     {% include 'blog/includes/post_card_template.html' %}
   {% endfor %}
 

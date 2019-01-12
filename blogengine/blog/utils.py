@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -13,7 +14,9 @@ class ObjectDetailMixin:
                       context={self.model.__name__.lower(): obj, 'obj': obj, 'detail': True})
 
 
-class BaseCrudMixinProperties:
+class BaseCUDMixin(LoginRequiredMixin):
+    raise_exception = True
+
     action = None
     model: models.Model = None
     form_model = None
@@ -24,7 +27,7 @@ class BaseCrudMixinProperties:
         return self.model.__name__.lower()
 
 
-class ObjectCreateMixin(BaseCrudMixinProperties):
+class ObjectCreateMixin(BaseCUDMixin):
     action = 'create'
 
     @property
@@ -49,7 +52,7 @@ class ObjectCreateMixin(BaseCrudMixinProperties):
         return self.get(request, bound_form)
 
 
-class ObjectUpdateMixin(BaseCrudMixinProperties):
+class ObjectUpdateMixin(BaseCUDMixin):
     action = 'update'
 
     def get_renderer(self, request, bound_form, obj):
@@ -76,7 +79,7 @@ class ObjectUpdateMixin(BaseCrudMixinProperties):
         return self.get_renderer(request, bound_form, obj)
 
 
-class ObjectDeleteMixin(BaseCrudMixinProperties):
+class ObjectDeleteMixin(BaseCUDMixin):
     action = 'delete'
 
     def get(self, request, slug):

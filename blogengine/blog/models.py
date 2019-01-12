@@ -39,6 +39,9 @@ class Post(models.Model):
         self.slug = gen_slug(self.title)
         super().save(*args, **kwargs)
 
+    class Meta:
+        ordering = ['-date_pub']
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=50, db_index=True)
@@ -59,3 +62,6 @@ class Tag(models.Model):
     @staticmethod
     def get_list_page() -> str:
         return reverse('tags_list')
+
+    class Meta:
+        ordering = ['title']

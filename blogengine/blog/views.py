@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views import View
 
@@ -8,7 +9,12 @@ from .forms import TagForm, PostForm
 
 def posts_list(request):
     posts = Post.objects.all()
-    return render(request, 'blog/index.html', context={'title': 'list posts', 'posts': posts})
+    paginator = Paginator(posts, per_page=2)
+    page_obj = paginator.get_page(request.GET.get('page', 1))
+
+    context = {'title': 'list posts', 'page_obj': page_obj}
+
+    return render(request, 'blog/index.html', context=context)
 
 
 def tags_list(request):

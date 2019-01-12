@@ -28,46 +28,27 @@
 <body>
 <div class="container">
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'posts_list' %}">posts</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'tags_list' %}">tags</a>
-        </li>
-
-        <!--<li class="nav-item">-->
-          <!--<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
-        <!--</li>-->
-
-      </ul>
-
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-
-    </div>
-  </nav>
-
-  <div class="container mt-5">
-    {% block content %}no any content here{% endblock %}
+  <div class="top-navbar">
+    {% include 'includes/top-navbar.html' %}
   </div>
 
+  <div class="container mt-5">
+    <div class="main">
+      {% block content %}no any content here{% endblock %}
+    </div>
+
+    <div class="paginator">
+      {% include 'includes/paginator.html' %}
+    </div>
+
+  </div>
+
+  {% if request.user.is_authenticated and request.user.is_staff %}
   <div class="admin-panel">
     <a class="btn btn-outline-info" href="/admin">admin panel</a>
     {% block admin_panel %}hello: USERNAME{% endblock%}
   </div>
+  {% endif %}
 
 </div>
 
