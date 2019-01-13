@@ -2,11 +2,19 @@
 
 {% block title %}blog{% endblock %}
 
+{% block content %}
+  {% if found %}
+    <h5>search results</h5>
+    <p>found: {{ found }}</p>
+    <hr/>
+  {% endif %}
+{% endblock %}
+
 {% block admin_panel %}
 
   <div class="dropdown">
-    <button class="btn btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+    <button class="btn btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       create
     </button>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">

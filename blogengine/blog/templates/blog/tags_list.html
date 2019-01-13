@@ -5,16 +5,13 @@
 {% endblock %}
 
 {% block content %}
+
+  <div class="user-search-result">{{ block.super }}</div>
+
   <h3 class="mb-5">tags</h3>
 
-  {% for tag in tags %}
-
-    {% if forloop.last %}
-      <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
-    {% else %}
-      <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a> |
-    {% endif %}
-
+  {% for tag in list %}
+    <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>{% if not forloop.last %} | {% endif %}
   {% endfor %}
 
 {% endblock %}

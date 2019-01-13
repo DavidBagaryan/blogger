@@ -18,8 +18,10 @@
 
     </ul>
 
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0"
+          action="{% if 'tag' in request.path_info %}{% url 'tags_list' %}{% else %}{% url 'posts_list' %}{% endif %}">
+
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="user_search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 

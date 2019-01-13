@@ -1,12 +1,12 @@
 {% extends 'blog/skeleton.html' %}
 
 {% block title %}
-
-  {{ title }}
-
+  posts - {{ block.super }}
 {% endblock %}
 
 {% block content %}
+
+  <div class="user-search-result">{{ block.super }}</div>
 
   <h3 class="mb-5">posts</h3>
 
